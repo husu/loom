@@ -1,44 +1,42 @@
 # Loom
 
+**简体中文** | [English](README.en.md)
+
 <div align="center">
 
-AI-powered JSON Schema document generator with TUI, web viewer and mock server
+基于 AI 的 JSON Schema 文档生成器，集成 TUI 交互、Web 浏览器与 Mock 服务
 
 [![Node.js](https://img.shields.io/badge/Node.js-≥18.0.0-green)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
 
 </div>
 
-## ✨ Features
+## ✨ 特性
 
-- **🤖 AI-Powered Schema Generation** - Interactive TUI chat interface to generate and update JSON Schema API documentation using LLMs (DeepSeek, OpenAI)
-- **🧩 Entity-Centric Modeling** - Manage reusable entity schemas in `docs/entities` and reference them in endpoint schemas via `x-entity-ref`
-- **📚 Modern Web Viewer** - React-based SPA for browsing modules, endpoints, and entities with interactive schema rendering
-- **⚡ Mock Server** - Dynamic mock API server that generates realistic test data based on JSON Schema
-- **🖥️ In-Chat Service Control** - Start/stop/restart mock server and web viewer directly inside TUI (`/mock`, `/view`)
-- **🗂️ Manifest Indexing** - Built-in manifest rebuild command for dependency/index consistency (`loom manifest rebuild`)
-- **⬆️ Auto Update Prompt** - On startup, Loom checks npm for a newer version and can upgrade automatically after confirmation
-- **🔧 TypeScript First** - Fully typed with modern TypeScript architecture
+- **🤖 AI 驱动的 Schema 生成** —— 通过 TUI 聊天界面与大模型（DeepSeek、OpenAI）对话生成和更新 JSON Schema API 文档
+- **🧩 实体（Entity）建模** —— 在 `docs/entities` 中维护可复用的实体 Schema，通过 `x-entity-ref` 在接口 Schema 中引用
+- **📚 现代 Web 浏览器** —— 基于 React 的 SPA，用于浏览模块、接口和实体，支持交互式 Schema 渲染
+- **⚡ Mock 服务** —— 基于 JSON Schema 动态生成贴近真实的 Mock 数据
+- **🖥️ TUI 内服务控制** —— 直接在 TUI 中启动/停止/重启 Mock 与 Web Viewer（`/mock`、`/view`）
+- **🗂️ Manifest 索引** —— 内置 `loom manifest rebuild` 命令重建依赖/索引一致性
+- **⬆️ 自动升级提示** —— 启动时检查 npm 上的新版本，确认后可自动升级
+- **🔧 TypeScript 优先** —— 完整类型定义，现代化的 TypeScript 架构
 
-## 📦 Installation
+## 📦 安装
 
-### Prerequisites
+### 环境要求
 - Node.js ≥ 18.0.0
-- npm or yarn
-- DeepSeek API key (for chat functionality)
+- npm 或 yarn
+- DeepSeek API Key（必需）
 
-### Website
-
-[https://loom.vegamo.cn](https://loom.vegamo.cn)
-
-### Global Installation
+### 全局安装
 ```bash
-npm install -g @vegamo/loom
-# or
-yarn global add @vegamo/loom
+npm install -g loom
+# 或
+yarn global add loom
 ```
 
-### Local Development
+### 本地开发
 ```bash
 git clone <repository-url>
 cd loom
@@ -46,29 +44,27 @@ npm install
 npm run build:all
 ```
 
-## ⚙️ 维护团队
+## ⚙️ 配置
 
-重庆维加动量科技有限公司  [https://www.vegamo.cn](https://www.vegamo.cn)
+### 配置文件
+Loom 使用一份全局配置文件（不依赖 `.env`）。
 
-### Configuration File
-Loom uses a global config file (no `.env` dependency).
-
-Default global config path:
+默认全局配置路径：
 - macOS/Linux: `~/.loom/config.json`
 - Windows: `%APPDATA%/loom/config.json`
 
-Optional override:
+可选覆盖：
 - `LOOM_CONFIG=/custom/path/config.json`
 
-When you run `loom chat` for the first time, it will guide you to create/update this global file interactively.
+首次运行 `loom chat` 时，会以交互向导的形式引导你创建/更新该全局配置文件。
 
-Default chat onboarding values:
-- `provider`: `deepseek`
-- `model`: `deepseek-chat`
-- `baseURL`: `https://api.deepseek.com/v1`
-- `apiKey`: required, must be entered by user
+聊天首次引导的默认值：
+- `provider`：`deepseek`
+- `model`：`deepseek-chat`
+- `baseURL`：`https://api.deepseek.com/v1`
+- `apiKey`：必填，需由用户输入
 
-You can also create the global config manually:
+你也可以手动创建全局配置：
 ```json
 {
   "outDir": "docs",
@@ -91,169 +87,169 @@ You can also create the global config manually:
 }
 ```
 
-`docs/` remains in each project directory (`--dir`) and is not moved to global storage.
+`docs/` 目录仍保留在各项目目录中（通过 `--dir` 指定），不会被移动到全局存储。
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
-### 1. Generate API Documentation
+### 1. 生成 API 文档
 ```bash
-# Start interactive TUI to generate JSON Schema
+# 启动交互式 TUI 来生成 JSON Schema
 loom chat
 
-# Or specify project directory
+# 或指定项目目录
 loom chat --dir ./my-api-project
 ```
 
-In `loom chat`, you can also control local services:
-- `/mock`, `/mock stop`, `/mock restart [port]`
-- `/view`, `/view stop`, `/view restart [port]`
+在 `loom chat` 中，你也可以控制本地服务：
+- `/mock`、`/mock stop`、`/mock restart [port]`
+- `/view`、`/view stop`、`/view restart [port]`
 
-### 2. View Documentation
+### 2. 浏览文档
 ```bash
-# Start web documentation viewer
+# 启动 Web 文档浏览器
 loom view
 
-# Or with custom port
+# 或指定端口
 loom view --port 8080
 ```
 
-### 3. Start Mock Server
+### 3. 启动 Mock 服务
 ```bash
-# Start mock API server
+# 启动 Mock API 服务
 loom mock
 
-# Or with custom port
+# 或指定端口
 loom mock --port 8081
 ```
 
-### 4. Combined Service (Recommended)
+### 4. 组合服务（推荐）
 ```bash
-# Start both viewer and mock server on same port
+# 在同一端口同时启动 Viewer 和 Mock 服务
 loom serve
 
-# Access at:
+# 访问入口：
 # - Web Viewer: http://localhost:3000
-# - Mock API: http://localhost:3000/mock/...
+# - Mock API:   http://localhost:3000/mock/...
 ```
 
-### 5. Upgrade Loom
+### 5. 升级 Loom
 ```bash
-# Manually trigger upgrade
+# 手动触发升级
 loom upgrade
 ```
 
-> Loom also checks npm for updates when you run commands.  
-> If a newer version is found, you can confirm and let Loom auto-upgrade.
+> 执行其它命令时，Loom 也会检查 npm 是否有新版本。  
+> 发现新版本时，确认即可自动升级。
 
-## 📖 Usage Guide
+## 📖 使用指南
 
 ### `loom chat`
-Interactive terminal UI for generating JSON Schema documents through AI conversation.
+通过 AI 对话生成 JSON Schema 文档的交互式终端 UI。
 
 ```bash
 loom chat [options]
 
 Options:
-  -d, --dir <path>    Target project directory (default: current directory)
-  -h, --help          Display help
+  -d, --dir <path>    目标项目目录（默认：当前目录）
+  -h, --help          显示帮助
 ```
 
-**Example Workflow:**
-1. Run `loom chat`
-2. Describe your API endpoints in natural language
-3. AI generates JSON Schema with proper structure
-4. Schema files are saved to `docs/` directory (configurable)
+**典型流程：**
+1. 运行 `loom chat`
+2. 用自然语言描述你的 API 接口
+3. AI 生成结构合理的 JSON Schema
+4. Schema 文件被保存到 `docs/` 目录（可配置）
 
-**Built-in chat commands:**
-- Input tip: `Enter` to send, `Shift+Enter`/`Alt+Enter` for newline, `↑`/`↓` to navigate history (persisted across sessions), `Tab` to autocomplete commands
-- `/help` — Show command help
-- `/reset` — Reset conversation history
-- `/list` — List generated schema files
-- `/mock`, `/mock stop`, `/mock restart [port]` — Manage mock server
-- `/view`, `/view stop`, `/view restart [port]` — Manage web viewer
-- `/scan <dir>` — Discover APIs from source code via LLM; `/scan resume`, `/scan reset` manage the checkpoint
-- `/abort` — Abort current request
-- `/exit` — Exit Loom
+**内置聊天命令：**
+- 输入提示：`Enter` 发送，`Shift+Enter`/`Alt+Enter` 换行，`↑`/`↓` 浏览历史记录（跨会话持久化），`Tab` 自动补全命令
+- `/help` —— 显示命令帮助
+- `/reset` —— 重置对话历史
+- `/list` —— 列出已生成的 Schema 文件
+- `/mock`、`/mock stop`、`/mock restart [port]` —— 管理 Mock 服务
+- `/view`、`/view stop`、`/view restart [port]` —— 管理 Web Viewer
+- `/scan <dir>` —— 通过 LLM 从源码中识别 API；`/scan resume`、`/scan reset` 管理断点
+- `/abort` —— 中止当前请求
+- `/exit` —— 退出 Loom
 
 ### `loom view`
-Modern web-based documentation viewer with React SPA interface.
+基于 React SPA 的现代化 Web 文档浏览器。
 
 ```bash
 loom view [options]
 
 Options:
-  -p, --port <number>  Port number (default: 3000)
-  -d, --dir <path>     Target project directory (default: current directory)
-  -h, --help           Display help
+  -p, --port <number>  端口号（默认：3000）
+  -d, --dir <path>     目标项目目录（默认：当前目录）
+  -h, --help           显示帮助
 ```
 
-**Features:**
-- 📁 Module browsing with endpoint counts
-- 🧩 Entity browsing from `docs/entities`
-- 🔍 Real-time search across modules and endpoints
-- 📊 Swagger-like schema table viewer for all request/response sections (query params, path params, headers, body)
-- 🔗 `x-entity-ref` auto-resolve in endpoint request/response rendering
-- 🎨 Clean, responsive UI with dark sidebar
-- 🔗 Direct links to specific endpoints
+**特性：**
+- 📁 按模块浏览，显示接口数量
+- 🧩 浏览 `docs/entities` 中的实体
+- 🔍 在模块与接口范围内实时搜索
+- 📊 类 Swagger 的 Schema 表格视图，覆盖所有请求/响应区段（query、path、headers、body）
+- 🔗 渲染接口请求/响应时自动解析 `x-entity-ref`
+- 🎨 简洁的响应式 UI，深色侧边栏
+- 🔗 支持接口的直链访问
 
 ### `loom mock`
-Dynamic mock API server that generates realistic data based on JSON Schema.
+基于 JSON Schema 动态生成数据的 Mock API 服务。
 
 ```bash
 loom mock [options]
 
 Options:
-  -p, --port <number>  Port number (default: 3001)
-  -d, --dir <path>     Target project directory (default: current directory)
-  -h, --help           Display help
+  -p, --port <number>  端口号（默认：3001）
+  -d, --dir <path>     目标项目目录（默认：当前目录）
+  -h, --help           显示帮助
 ```
 
-**Features:**
-- 🚀 Automatic route registration from JSON Schema files
-- 🎲 Smart mock data generation using mock-json-schema
-- 📡 Support for all HTTP methods (GET, POST, PUT, DELETE, PATCH)
-- 🔧 Configurable response status codes and schemas
+**特性：**
+- 🚀 自动从 JSON Schema 文件注册路由
+- 🎲 基于 mock-json-schema 智能生成 Mock 数据
+- 📡 支持所有 HTTP 方法（GET、POST、PUT、DELETE、PATCH）
+- 🔧 可配置响应状态码与 Schema
 
 ### `loom serve`
-Combined service that runs both web viewer and mock server together.
+组合服务，同时运行 Web Viewer 与 Mock 服务。
 
 ```bash
 loom serve [options]
 
 Options:
-  -p, --port <number>  Port number (default: 3000)
-  -d, --dir <path>     Target project directory (default: current directory)
-  -h, --help           Display help
+  -p, --port <number>  端口号（默认：3000）
+  -d, --dir <path>     目标项目目录（默认：当前目录）
+  -h, --help           显示帮助
 ```
 
-**URL Structure:**
-- `http://localhost:3000/` - Web documentation viewer
-- `http://localhost:3000/api/docs` - Documentation API
-- `http://localhost:3000/api/schemas` - Schema file API
-- `http://localhost:3000/api/entities` - Entity file API
-- `http://localhost:3000/mock/...` - Mock API endpoints
+**URL 结构：**
+- `http://localhost:3000/` —— Web 文档浏览器
+- `http://localhost:3000/api/docs` —— 文档 API
+- `http://localhost:3000/api/schemas` —— Schema 文件 API
+- `http://localhost:3000/api/entities` —— 实体文件 API
+- `http://localhost:3000/mock/...` —— Mock API 路由
 
 ### `loom manifest rebuild`
-Rebuild docs manifest index file (`.loom-manifest.json`) for dependency/index consistency.
+重建文档清单索引文件 `.loom-manifest.json`，确保依赖/索引一致。
 
 ```bash
 loom manifest rebuild [options]
 
 Options:
-  -d, --dir <path>  Target project directory (default: current directory)
-  -h, --help        Display help
+  -d, --dir <path>  目标项目目录（默认：当前目录）
+  -h, --help        显示帮助
 ```
 
 ### `loom upgrade`
-Upgrade loom to the latest npm version.
+将 loom 升级到 npm 上的最新版本。
 
 ```bash
 loom upgrade
 ```
 
-## 📝 JSON Schema Format
+## 📝 JSON Schema 格式
 
-Loom uses a custom JSON Schema format optimized for API documentation:
+Loom 使用一套为 API 文档优化的自定义 JSON Schema 格式：
 
 ```json
 {
@@ -301,24 +297,24 @@ Loom uses a custom JSON Schema format optimized for API documentation:
 }
 ```
 
-### Schema Structure
-- **title**: API module title
-- **description**: Module description
-- **endpoints**: Array of API endpoint definitions
-- **endpoint.path**: URL path (supports path parameters)
-- **endpoint.method**: HTTP method (GET, POST, PUT, DELETE, PATCH)
-- **endpoint.request**: Optional request schema (headers, params, query, body)
-- **endpoint.response**: Response schemas keyed by status code
+### Schema 结构说明
+- **title**：API 模块标题
+- **description**：模块描述
+- **endpoints**：API 接口定义数组
+- **endpoint.path**：URL 路径（支持路径参数）
+- **endpoint.method**：HTTP 方法（GET、POST、PUT、DELETE、PATCH）
+- **endpoint.request**：可选的请求 Schema（headers、params、query、body）
+- **endpoint.response**：按状态码索引的响应 Schema
 
-## 🧩 Entity Schema & References
+## 🧩 实体（Entity）Schema 与引用
 
-Loom supports reusable entity schemas in:
+Loom 支持以下位置的可复用实体 Schema：
 
 ```text
 docs/entities/*.entity.schema.json
 ```
 
-Example entity file:
+实体文件示例：
 
 ```json
 {
@@ -335,7 +331,7 @@ Example entity file:
 }
 ```
 
-In endpoint schemas, reference an entity with `x-entity-ref`:
+在接口 Schema 中通过 `x-entity-ref` 引用实体：
 
 ```json
 {
@@ -348,85 +344,191 @@ In endpoint schemas, reference an entity with `x-entity-ref`:
 }
 ```
 
-Supported forms:
-- String form: `"x-entity-ref": "User"`
-- Object form: `"x-entity-ref": { "entity": "User", "pick": ["id", "name"] }`
+支持的形式：
+- 字符串形式：`"x-entity-ref": "User"`
+- 对象形式：`"x-entity-ref": { "entity": "User", "pick": ["id", "name"] }`
 
+## 🏗️ 项目结构
 
+```
+loom/
+├── src/
+│   ├── agents/          # 支持工具调用的 AI Agent 系统
+│   │   ├── core/        # Agent 核心逻辑
+│   │   └── memory/      # 对话记忆管理
+│   ├── llm/             # LLM 客户端（DeepSeek、OpenAI）
+│   │   ├── client.ts    # 流式 LLM 客户端
+│   │   └── config.ts    # LLM 配置
+│   ├── tools/           # Agent 工具系统
+│   │   ├── schema-gen.ts        # Schema 生成工具
+│   │   ├── schema-validate.ts   # Schema 校验工具
+│   │   ├── file-ops.ts          # Schema 文件操作工具
+│   │   ├── entity-file-ops.ts   # 实体文件操作工具
+│   │   └── entity-workflow.ts   # 实体影响/同步/校验工具
+│   ├── tui/             # 终端 UI（聊天界面）
+│   │   ├── app.tsx      # TUI 主应用
+│   │   └── components/  # TUI 的 React 组件
+│   ├── view/            # Web 文档浏览器
+│   │   ├── server.ts    # Fastify Web 服务
+│   │   ├── routes/      # API 路由
+│   │   ├── frontend/    # React SPA 前端
+│   │   └── public/      # 静态资源
+│   ├── mocks/           # Mock 服务
+│   │   ├── server.ts    # Mock 服务实现
+│   │   ├── router.ts    # 动态路由注册
+│   │   └── generator.ts # Mock 数据生成
+│   ├── shared/          # 共享工具
+│   │   ├── config.ts                  # 配置加载器
+│   │   ├── entity-utils.ts            # 实体读写/引用工具
+│   │   ├── manifest-utils.ts          # 清单索引构建器
+│   │   ├── schema-entity-resolver.ts  # 给 Viewer API 用的 x-entity-ref 解析器
+│   │   ├── types.ts                   # TypeScript 类型定义
+│   │   └── logger.ts                  # 日志工具
+│   ├── serve.ts         # Viewer + Mock 组合服务
+│   └── index.ts         # CLI 入口
+├── docs/                # 生成的 Schema 文件
+├── scripts/             # 构建脚本
+├── dist/                # 编译输出
+└── package.json
+```
 
-### Adding New Features
-1. **New LLM Provider**: Extend `src/llm/config.ts` and `src/llm/client.ts`
-2. **New Agent Tool**: Add under `src/tools/` and register in `src/agents/core/agent.ts`
-3. **UI Component**: Add to `src/view/frontend/components/`
-4. **API Endpoint**: Add to `src/view/routes/` or `src/mocks/router.ts`
-acts
-- All runtime dependencies are correctly specified
+## 🛠️ 开发
 
-## 📋 Changelog
+### 构建项目
+```bash
+# 构建 TypeScript 后端
+npm run build
+
+# 构建 React 前端
+npm run build:view
+
+# 同时构建（推荐）
+npm run build:all
+```
+
+### 开发模式
+```bash
+# 启动 TypeScript 开发模式
+npm run dev
+
+# 前端开发的 watch 模式
+npm run dev:view
+```
+
+### 添加新功能
+1. **新的 LLM 提供商**：扩展 `src/llm/config.ts` 与 `src/llm/client.ts`
+2. **新的 Agent 工具**：放在 `src/tools/` 下，并在 `src/agents/core/agent.ts` 中注册
+3. **UI 组件**：放在 `src/view/frontend/components/`
+4. **API 路由**：放在 `src/view/routes/` 或 `src/mocks/router.ts`
+
+## 📦 发布到 npm
+
+维护者发布新版本到 npm 的步骤：
+
+```bash
+# 登录 npm（仅首次）
+npm login
+
+# 视需要更新版本号
+npm version patch  # 或 minor、major
+
+# 构建并打包
+npm run build:all
+
+# 发布到 npm
+npm publish
+
+# 或先用 dry-run 预演
+npm publish --dry-run
+```
+
+包内容包括：
+- 编译后的 JavaScript（`dist/`）
+- TypeScript 类型定义
+- 预构建的 React 前端 Bundle
+- CLI 可执行文件（`loom`）
+
+打包相关配置：
+- `prepack` 脚本确保打包前会重新构建
+- `.npmignore` 排除源码与开发期产物
+- 运行时依赖均已正确声明
+
+## 📋 更新日志
 
 ### v0.3.0
-- **Added**: `--lang zh|en` flag for `/scan` and `/scan resume`. Phase 3 (generate-entity) and Phase 4 (generate-endpoint) emit `description` and `summary` text in the configured language. Default is `zh`; override globally via `scan.language` in `~/.loom/config.json` or per-invocation via the flag
-- **Changed**: `/scan` LLM cache is now per-language for Phase 3/4 (key gains a trailing `:zh` or `:en` segment), while Phase 1/2 stay shared across languages. Switching language only invalidates the half that actually changes
-- **Changed**: Cache phase identifiers renamed to match scan-flow numbering (`phase1` extract-endpoints, `phase2` extract-entities, `phase3` generate-entity, `phase4` generate-endpoint). Upgrading auto-migrates: Phase 1/2 entries from previous versions keep hitting; Phase 3/4 entries are regenerated on next scan
-- **Removed**: Global `CACHE_VERSION` wipe. Cache invalidation is now driven by source-hash + per-entry shape guards. For truly breaking prompt changes, users can `rm <outDir>/.loom-scan-cache.json` to clear manually
-- **Fixed**: Phase 4 (generate-endpoint) summary no longer falls back to the English `brief` when the LLM omits `summary`; it degrades to `<METHOD> <path>` instead, avoiding a stray English sentence in otherwise-Chinese docs
+- **Added**：`/scan` 与 `/scan resume` 新增 `--lang zh|en` 参数。Phase 3（generate-entity）和 Phase 4（generate-endpoint）按所选语言输出 `description` 与 `summary` 文本。默认 `zh`；可通过 `~/.loom/config.json` 中的 `scan.language` 全局覆盖，或在执行命令时使用该参数
+- **Changed**：`/scan` 的 LLM 缓存对 Phase 3/4 改为按语言区分（键末尾追加 `:zh` 或 `:en`），Phase 1/2 仍跨语言共享。切换语言只会失效真正会变的那一半
+- **Changed**：缓存的阶段标识符改名以匹配扫描流程的编号（`phase1` extract-endpoints、`phase2` extract-entities、`phase3` generate-entity、`phase4` generate-endpoint）。升级自动迁移：旧版本的 Phase 1/2 记录继续命中；Phase 3/4 记录会在下次扫描时重新生成
+- **Removed**：去掉全局 `CACHE_VERSION` 一刀切清空机制。缓存失效改由 source-hash + 每条记录的形状校验驱动。如有 prompt 重大变更，用户可手动 `rm <outDir>/.loom-scan-cache.json` 清空
+- **Fixed**：Phase 4 当 LLM 漏掉 `summary` 时，不再回退到英文 `brief`，而是退化为 `<METHOD> <path>`，避免一句英文混在中文文档里
 
 ### v0.2.0
-- **Added**: `/scan <dir>` — multi-language, LLM-driven API discovery from existing source code. Detects framework, narrows file scope via globs, extracts endpoint identities (Phase 1), discovers + generates entity schemas (Phase 1.5), then generates one schema file per route prefix (Phase 2 referencing entities via `x-entity-ref`)
-- **Added**: `/scan resume` and `/scan reset` — checkpoint-aware continuation of an interrupted scan, or discard of the saved checkpoint
-- **Added**: LLM output cache for `/scan`, keyed by file content hash (`<outDir>/.loom-scan-cache.json`); incremental rescans skip unchanged files and can save 25+ minutes. Pass `--no-cache` to force LLM calls
-- **Added**: Persistent input history in `loom chat`, stored globally at `~/.loom/history.jsonl` (capped at 100 entries). Up/down arrows navigate across sessions
-- **Added**: Tab autocomplete for slash commands — bash-style common-prefix completion with the candidate list rendered inline
-- **Added**: Centralized slash command registry (`src/tui/commands.ts`) so the Header panel, `/help` text, and the autocomplete list share one source of truth
-- **Added**: Silent usage telemetry — fires `{ userToken, action: "used" }` once per CLI invocation. Persisted UUID at `~/.loom/install-id`, offline-tolerant outbox at `~/.loom/telemetry-outbox.jsonl`
-- **Added**: Per-scan diagnostic log at `<outDir>/.loom-scan.log` plus raw response dumps from `scan-failures.ts` for LLM debugging
-- **Improved**: Phase 2 sends a handler excerpt rather than the full source file, reducing token usage
-- **Improved**: `/scan` tolerates reasoning-model output (e.g. DeepSeek-R1 `<think>` content followed by final JSON in one body)
-- **Improved**: LLM client classifies `APIConnectionError` and SDK-internal aborts as retryable timeouts
-- **Fixed**: `/scan resume` on an already-completed checkpoint now surfaces a "scan already complete" message instead of silently re-running analyze
-- **Fixed**: Entity nullability expressed via `required[]` rather than `type` unions
-- **Fixed**: Group conflict policy preserved across `doneCount` increments
-- **Fixed**: Scan sub-phase preserved on abort so `/scan resume` continues at the right step
-- **Fixed**: Chat startup command list synced with `/help` (now includes `/scan` and `/abort`)
-- **Removed**: `/init` command (disabled); `requirement.md` is still loaded as agent context if the file exists in the project
+- **Added**：`/scan <dir>` —— 多语言、LLM 驱动的源码 API 识别。识别框架、用 glob 收紧文件范围、提取接口标识（Phase 1）、识别并生成实体 Schema（Phase 1.5），然后按路由前缀生成单文件 Schema（Phase 2，通过 `x-entity-ref` 引用实体）
+- **Added**：`/scan resume` 和 `/scan reset` —— 基于断点继续被中断的扫描，或丢弃已保存的断点
+- **Added**：`/scan` 的 LLM 输出缓存，按文件内容哈希索引（`<outDir>/.loom-scan-cache.json`）；增量扫描会跳过未变更的文件，可节省 25 分钟以上。可使用 `--no-cache` 强制调用 LLM
+- **Added**：`loom chat` 的输入历史持久化在全局 `~/.loom/history.jsonl`（上限 100 条），上下方向键跨会话浏览
+- **Added**：斜杠命令 Tab 自动补全 —— bash 风格的公共前缀补全，候选列表内联展示
+- **Added**：集中式的斜杠命令注册表（`src/tui/commands.ts`），让 Header 面板、`/help` 文案与自动补全列表共享一份数据源
+- **Added**：静默使用埋点 —— 每次 CLI 调用上报一次 `{ userToken, action: "used" }`。UUID 持久化于 `~/.loom/install-id`，离线时落到 `~/.loom/telemetry-outbox.jsonl`
+- **Added**：每次扫描的诊断日志 `<outDir>/.loom-scan.log`，以及来自 `scan-failures.ts` 的原始响应快照，便于排查 LLM 问题
+- **Improved**：Phase 2 改为发送 handler 片段而非整文件，降低 token 消耗
+- **Improved**：`/scan` 容忍推理模型的输出格式（例如 DeepSeek-R1 在同一响应中先输出 `<think>` 再给出最终 JSON）
+- **Improved**：LLM 客户端将 `APIConnectionError` 与 SDK 内部 abort 归为可重试的 timeout
+- **Fixed**：对已经扫描完成的断点执行 `/scan resume`，现在会提示 "scan already complete" 而不是默默重跑 analyze
+- **Fixed**：实体的可空性改用 `required[]` 表达，而不是 `type` 联合
+- **Fixed**：在 `doneCount` 自增过程中保留 group 冲突策略
+- **Fixed**：abort 时保留扫描子阶段，`/scan resume` 能从正确步骤继续
+- **Fixed**：聊天启动时的命令列表与 `/help` 同步（现在包含 `/scan` 与 `/abort`）
+- **Removed**：禁用了 `/init` 命令；若项目里存在 `requirement.md`，仍会作为 agent 上下文加载
 
 ### v0.1.6
-- **Added**: Mock view / Mock edit pages for each endpoint, accessible from the module list
-- **Added**: Sidecar `<name>.mock.json` storage for hand-written mock responses (one active override per endpoint)
-- **Added**: Mock server now responds with the override's HTTP status code (e.g. saving a 400 mock makes `/mock/<path>` return real HTTP 400)
-- **Added**: Status code switcher in Mock view/edit, marking which statuses already have a saved override
-- **Added**: cURL example block on Mock view, generated from the endpoint's `request` schema (path params, query, headers, body all filled with samples)
-- **Added**: Mock.js expression support inside saved mock bodies (`@cname`, `@integer(1,100)`, `'list|1-5': [...]` etc.) — templates are stored as-is and expanded on each request
-- **Removed**: Inline "Mock Testing" section from the endpoint detail page (superseded by the dedicated Mock pages)
+- **Added**：每个接口都有 Mock view / Mock edit 页面，可从模块列表进入
+- **Added**：手写的 Mock 响应以同名 sidecar 文件 `<name>.mock.json` 存储（每个接口同时只有一个生效 override）
+- **Added**：Mock 服务会使用 override 的 HTTP 状态码响应（例如保存 400 的 mock 后，`/mock/<path>` 会真的返回 HTTP 400）
+- **Added**：Mock view/edit 中的状态码切换器，并标记哪些状态码已经存在 override
+- **Added**：Mock view 提供 cURL 示例区块，基于接口的 `request` schema 生成（path、query、headers、body 全部填充示例值）
+- **Added**：Mock body 内支持 Mock.js 表达式（`@cname`、`@integer(1,100)`、`'list|1-5': [...]` 等）—— 模板原样存储，每次请求时再展开
+- **Removed**：接口详情页内嵌的 "Mock Testing" 区块（已由独立的 Mock 页面替代）
 
 ### v0.1.4
-- **Fixed**: Query parameters, path parameters, and headers for GET endpoints now display correctly in the Web Viewer
-- **Improved**: All request/response sections use a consistent Swagger-like table view (SchemaTableViewer) with type badges, constraints, and expand/collapse support
-- **Fixed**: Duplicate `setNotFoundHandler` error when starting the Web Viewer (`loom view`) or combined server (`loom serve`)
-- **Removed**: Broken `@stoplight/json-schema-viewer` dependency (incompatible with React 19)
+- **Fixed**：Web Viewer 中 GET 接口的 query 参数、path 参数和 headers 现在能正确显示
+- **Improved**：所有请求/响应区段统一使用类 Swagger 的表格视图（SchemaTableViewer），含类型标签、约束、展开/折叠
+- **Fixed**：启动 Web Viewer（`loom view`）或组合服务（`loom serve`）时的 `setNotFoundHandler` 重复注册错误
+- **Removed**：移除与 React 19 不兼容的 `@stoplight/json-schema-viewer` 依赖
 
+## 🤝 贡献
 
+欢迎贡献！流程如下：
 
-### Development Guidelines
-- Use TypeScript with strict mode
-- Follow existing code style and patterns
-- Add tests for new functionality
-- Update documentation as needed
+1. **Fork** 仓库
+2. **创建特性分支**：`git checkout -b feature/amazing-feature`
+3. **提交修改**：`git commit -m 'Add amazing feature'`
+4. **推送分支**：`git push origin feature/amazing-feature`
+5. **发起 Pull Request**
 
+### 开发准则
+- 使用 TypeScript 严格模式
+- 遵循既有代码风格与模式
+- 为新功能补充测试
+- 同步更新文档
 
-## 🙏 Acknowledgments
+## 📄 许可证
 
-- [DeepSeek](https://www.deepseek.com/) for AI capabilities
-- [Fastify](https://fastify.io/) for high-performance web server
-- [React](https://reactjs.org/) for UI components
-- [mock-json-schema](https://github.com/anttiviljami/mock-json-schema) for mock data generation
-- [Ink](https://github.com/vadimdemedes/ink) for terminal UI
+本项目采用 ISC 协议 —— 详见 [LICENSE](LICENSE)。
 
-## 📞 Support
+## 🙏 致谢
 
-- **Issues**: [GitHub Issues](https://github.com/husu/loom/issues)
-- **Documentation**: This README and code comments
-- **Questions**: Open an issue or discussion
+- [DeepSeek](https://www.deepseek.com/) —— 提供 AI 能力
+- [Fastify](https://fastify.io/) —— 高性能 Web 服务
+- [React](https://reactjs.org/) —— UI 组件
+- [mock-json-schema](https://github.com/anttiviljami/mock-json-schema) —— Mock 数据生成
+- [Ink](https://github.com/vadimdemedes/ink) —— 终端 UI
+
+## 📞 支持
+
+- **Issues**：[GitHub Issues](https://github.com/yourusername/loom/issues)
+- **文档**：本 README 与代码注释
+- **提问**：欢迎在 Issues 或 Discussions 中提出
 
 ---
 
