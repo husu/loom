@@ -421,37 +421,6 @@ npm run dev:view
 3. **UI 组件**：放在 `src/view/frontend/components/`
 4. **API 路由**：放在 `src/view/routes/` 或 `src/mocks/router.ts`
 
-## 📦 发布到 npm
-
-维护者发布新版本到 npm 的步骤：
-
-```bash
-# 登录 npm（仅首次）
-npm login
-
-# 视需要更新版本号
-npm version patch  # 或 minor、major
-
-# 构建并打包
-npm run build:all
-
-# 发布到 npm
-npm publish
-
-# 或先用 dry-run 预演
-npm publish --dry-run
-```
-
-包内容包括：
-- 编译后的 JavaScript（`dist/`）
-- TypeScript 类型定义
-- 预构建的 React 前端 Bundle
-- CLI 可执行文件（`loom`）
-
-打包相关配置：
-- `prepack` 脚本确保打包前会重新构建
-- `.npmignore` 排除源码与开发期产物
-- 运行时依赖均已正确声明
 
 ## 📋 更新日志
 
