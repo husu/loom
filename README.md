@@ -348,78 +348,7 @@ docs/entities/*.entity.schema.json
 - 字符串形式：`"x-entity-ref": "User"`
 - 对象形式：`"x-entity-ref": { "entity": "User", "pick": ["id", "name"] }`
 
-## 🏗️ 项目结构
 
-```
-loom/
-├── src/
-│   ├── agents/          # 支持工具调用的 AI Agent 系统
-│   │   ├── core/        # Agent 核心逻辑
-│   │   └── memory/      # 对话记忆管理
-│   ├── llm/             # LLM 客户端（DeepSeek、OpenAI）
-│   │   ├── client.ts    # 流式 LLM 客户端
-│   │   └── config.ts    # LLM 配置
-│   ├── tools/           # Agent 工具系统
-│   │   ├── schema-gen.ts        # Schema 生成工具
-│   │   ├── schema-validate.ts   # Schema 校验工具
-│   │   ├── file-ops.ts          # Schema 文件操作工具
-│   │   ├── entity-file-ops.ts   # 实体文件操作工具
-│   │   └── entity-workflow.ts   # 实体影响/同步/校验工具
-│   ├── tui/             # 终端 UI（聊天界面）
-│   │   ├── app.tsx      # TUI 主应用
-│   │   └── components/  # TUI 的 React 组件
-│   ├── view/            # Web 文档浏览器
-│   │   ├── server.ts    # Fastify Web 服务
-│   │   ├── routes/      # API 路由
-│   │   ├── frontend/    # React SPA 前端
-│   │   └── public/      # 静态资源
-│   ├── mocks/           # Mock 服务
-│   │   ├── server.ts    # Mock 服务实现
-│   │   ├── router.ts    # 动态路由注册
-│   │   └── generator.ts # Mock 数据生成
-│   ├── shared/          # 共享工具
-│   │   ├── config.ts                  # 配置加载器
-│   │   ├── entity-utils.ts            # 实体读写/引用工具
-│   │   ├── manifest-utils.ts          # 清单索引构建器
-│   │   ├── schema-entity-resolver.ts  # 给 Viewer API 用的 x-entity-ref 解析器
-│   │   ├── types.ts                   # TypeScript 类型定义
-│   │   └── logger.ts                  # 日志工具
-│   ├── serve.ts         # Viewer + Mock 组合服务
-│   └── index.ts         # CLI 入口
-├── docs/                # 生成的 Schema 文件
-├── scripts/             # 构建脚本
-├── dist/                # 编译输出
-└── package.json
-```
-
-## 🛠️ 开发
-
-### 构建项目
-```bash
-# 构建 TypeScript 后端
-npm run build
-
-# 构建 React 前端
-npm run build:view
-
-# 同时构建（推荐）
-npm run build:all
-```
-
-### 开发模式
-```bash
-# 启动 TypeScript 开发模式
-npm run dev
-
-# 前端开发的 watch 模式
-npm run dev:view
-```
-
-### 添加新功能
-1. **新的 LLM 提供商**：扩展 `src/llm/config.ts` 与 `src/llm/client.ts`
-2. **新的 Agent 工具**：放在 `src/tools/` 下，并在 `src/agents/core/agent.ts` 中注册
-3. **UI 组件**：放在 `src/view/frontend/components/`
-4. **API 路由**：放在 `src/view/routes/` 或 `src/mocks/router.ts`
 
 
 ## 📋 更新日志
@@ -465,25 +394,8 @@ npm run dev:view
 - **Fixed**：启动 Web Viewer（`loom view`）或组合服务（`loom serve`）时的 `setNotFoundHandler` 重复注册错误
 - **Removed**：移除与 React 19 不兼容的 `@stoplight/json-schema-viewer` 依赖
 
-## 🤝 贡献
 
-欢迎贡献！流程如下：
 
-1. **Fork** 仓库
-2. **创建特性分支**：`git checkout -b feature/amazing-feature`
-3. **提交修改**：`git commit -m 'Add amazing feature'`
-4. **推送分支**：`git push origin feature/amazing-feature`
-5. **发起 Pull Request**
-
-### 开发准则
-- 使用 TypeScript 严格模式
-- 遵循既有代码风格与模式
-- 为新功能补充测试
-- 同步更新文档
-
-## 📄 许可证
-
-本项目采用 ISC 协议 —— 详见 [LICENSE](LICENSE)。
 
 ## 🙏 致谢
 
@@ -495,8 +407,6 @@ npm run dev:view
 
 ## 📞 支持
 
-- **Issues**：[GitHub Issues](https://github.com/yourusername/loom/issues)
-- **文档**：本 README 与代码注释
 - **提问**：欢迎在 Issues 或 Discussions 中提出
 
 ---
