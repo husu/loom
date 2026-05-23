@@ -36,25 +36,15 @@ npm install -g loom
 yarn global add loom
 ```
 
-### Local Development
-```bash
-git clone <repository-url>
-cd loom
-npm install
-npm run build:all
-```
 
 ## ⚙️ Configuration
 
 ### Configuration File
-Loom uses a global config file (no `.env` dependency).
 
 Default global config path:
 - macOS/Linux: `~/.loom/config.json`
 - Windows: `%APPDATA%/loom/config.json`
 
-Optional override:
-- `LOOM_CONFIG=/custom/path/config.json`
 
 When you run `loom chat` for the first time, it will guide you to create/update this global file interactively.
 
