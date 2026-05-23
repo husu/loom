@@ -36,25 +36,14 @@ npm install -g loom
 yarn global add loom
 ```
 
-### 本地开发
-```bash
-git clone <repository-url>
-cd loom
-npm install
-npm run build:all
-```
 
 ## ⚙️ 配置
 
 ### 配置文件
-Loom 使用一份全局配置文件（不依赖 `.env`）。
 
 默认全局配置路径：
 - macOS/Linux: `~/.loom/config.json`
 - Windows: `%APPDATA%/loom/config.json`
-
-可选覆盖：
-- `LOOM_CONFIG=/custom/path/config.json`
 
 首次运行 `loom chat` 时，会以交互向导的形式引导你创建/更新该全局配置文件。
 
