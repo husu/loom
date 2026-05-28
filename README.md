@@ -31,9 +31,9 @@
 
 ### 全局安装
 ```bash
-npm install -g loom
+npm install -g @vegamo/loom
 # 或
-yarn global add loom
+yarn global add @vegamo/loom
 ```
 
 
