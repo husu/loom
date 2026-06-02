@@ -403,3 +403,83 @@ docs/entities/*.entity.schema.json
 <div align="center">
 Made with ❤️ by the Loom team
 </div>
+
+
+## ❓ FAQ
+
+### 什么是 Loom？
+
+Loom 是基于 AI 的 JSON Schema 文档生成器，集成 TUI 交互、Web 浏览器与 Mock 服务。通过与大模型对话生成和更新 API 文档。
+
+### 核心功能有哪些？
+
+| 功能 | 描述 |
+|------|------|
+| 🤖 AI Schema 生成 | 通过 TUI 聊天界面与大模型对话生成 JSON Schema API 文档 |
+| 🧩 实体建模 | 在 docs/entities 中维护可复用的实体 Schema，通过 x-entity-ref 引用 |
+| 📚 Web 浏览器 | 基于 React 的 SPA，浏览模块、接口和实体，支持交互式 Schema 渲染 |
+| ⚡ Mock 服务 | 基于 JSON Schema 动态生成贴近真实的 Mock 数据 |
+| 🖥️ TUI 内服务控制 | 直接在 TUI 中启动/停止/重启 Mock 与 Web Viewer |
+| 🗂️ Manifest 索引 | loom manifest rebuild 命令重建依赖/索引一致性 |
+| ⬆️ 自动升级 | 启动时检查 npm 新版本，确认后可自动升级 |
+
+### 支持哪些 AI 模型？
+
+| Provider | 模型 |
+|----------|------|
+| DeepSeek | deepseek-chat（默认） |
+| OpenAI | GPT 系列 |
+
+### 如何安装？
+
+```bash
+npm install -g @vegamo/loom
+# 或
+yarn global add @vegamo/loom
+```
+
+### 环境要求是什么？
+
+- Node.js ≥ 18.0.0
+- npm 或 yarn
+- DeepSeek API Key（必需）
+
+### 配置文件在哪？
+
+默认全局配置路径：
+- macOS/Linux: ~/.loom/config.json
+- Windows: %APPDATA%/loom/config.json
+
+首次运行 loom chat 时，会以交互向导形式引导创建配置文件。
+
+### 如何使用？
+
+```bash
+# 启动 TUI 聊天界面
+loom chat
+
+# 启动 Mock 服务
+loom mock
+
+# 启动 Web 浏览器
+loom view
+
+# 重建 Manifest 索引
+loom manifest rebuild
+```
+
+### 是免费开源的吗？
+
+是的！Loom 是开源项目，完整 TypeScript 类型定义。你可以：
+- 自由使用和修改
+- 部署到自己的环境
+- 使用自己选择的 AI 模型
+
+### 如何贡献代码？
+
+- 通过 GitHub Issues 报告问题或建议功能
+- 提交 PR 贡献代码改进
+
+### 哪里可以获取帮助？
+
+- **GitHub Issues**: [https://github.com/husu/loom/issues](https://github.com/husu/loom/issues)
