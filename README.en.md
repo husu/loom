@@ -131,6 +131,66 @@ loom upgrade
 > Loom also checks npm for updates when you run commands.  
 > If a newer version is found, you can confirm and let Loom auto-upgrade.
 
+## 🔎 Research an external API before generating schemas (optional)
+
+When documenting an external API or designing an integration, gather current request and response details before asking Loom to generate schemas. You can use [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp) in Cursor for this research, then pass a reviewed brief to `loom chat`.
+
+This research step runs in Cursor. Loom continues to use your configured LLM and API key. Parallel's anonymous endpoint offers free web search in Fast mode and page fetching without a Parallel account or API key, subject to free-tier limits.
+
+### 1. Connect Cursor to Parallel
+
+With [Cursor's MCP support](https://cursor.com/docs/context/mcp), add this entry to `.cursor/mcp.json` in your API project. If the file already exists, merge the `parallel-search` entry into its existing `mcpServers` object and keep your other servers:
+
+```json
+{
+  "mcpServers": {
+    "parallel-search": {
+      "url": "https://search.parallel.ai/mcp"
+    }
+  }
+}
+```
+
+Confirm that `web_search` and `web_fetch` are available in Cursor before continuing. If they are missing, check that the server is enabled and connected using the linked MCP setup guides.
+
+### 2. Build a sourced API brief
+
+For example, ask Cursor:
+
+```text
+Use Parallel web_search to find GitHub's official REST documentation for
+listing repository issues. Use web_fetch to read the relevant documentation.
+Prepare a short API brief with source URLs and the date checked:
+- HTTP method and path, authentication and version headers
+- Path/query parameters, types, defaults, and documented constraints
+- Response shape, documented required/nullable fields, and error statuses
+- Pagination and the distinction between issues and pull requests
+Mark anything the sources do not establish as unknown. Do not infer required
+fields from sample responses. Do not include real tokens or private data.
+```
+
+Review the brief against the [official endpoint documentation](https://docs.github.com/en/rest/issues/issues#list-repository-issues). Check that each detail belongs to the selected endpoint and API version; resolve unknowns before modeling them. Keep the source URLs and review date with your project notes.
+
+### 3. Give the reviewed brief to Loom
+
+Start Loom in your API project:
+
+```bash
+loom chat --dir ./my-api-project
+```
+
+Paste the reviewed brief into the chat with a request such as:
+
+```text
+Generate Loom API documentation for the endpoint described below. Use its
+verified request/response details and reusable entities where appropriate.
+Ask me about unresolved fields instead of inventing them.
+
+[Paste the reviewed API brief here]
+```
+
+Review the generated schemas against the brief, then use `loom view --dir ./my-api-project` to inspect them and `loom mock --dir ./my-api-project` for local mock responses. Mocks help test your integration's expected shapes; verify real API behavior separately with the upstream service.
+
 ## 📖 Usage Guide
 
 ### `loom chat`

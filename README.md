@@ -130,6 +130,65 @@ loom upgrade
 > 执行其它命令时，Loom 也会检查 npm 是否有新版本。  
 > 发现新版本时，确认即可自动升级。
 
+## 🔎 生成 Schema 前调研外部 API（可选）
+
+为外部 API 编写文档或设计集成时，可以先核对最新的请求与响应细节，再让 Loom 生成 Schema。你可以在 Cursor 中使用 [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp) 调研，将审核后的 API 摘要交给 `loom chat`。
+
+调研步骤在 Cursor 中完成。Loom 仍使用你配置的大模型和 API Key。Parallel 的匿名端点提供免费额度内的 Fast 模式网页搜索和页面内容抓取，无需 Parallel 账号或 API Key。
+
+### 1. 在 Cursor 中连接 Parallel
+
+使用 [Cursor 的 MCP 支持](https://cursor.com/docs/context/mcp)，在 API 项目的 `.cursor/mcp.json` 中添加以下配置。如果文件已存在，请将 `parallel-search` 合并到现有的 `mcpServers` 对象中，保留其它服务器：
+
+```json
+{
+  "mcpServers": {
+    "parallel-search": {
+      "url": "https://search.parallel.ai/mcp"
+    }
+  }
+}
+```
+
+继续前，请确认 Cursor 中可用的工具包含 `web_search` 和 `web_fetch`。如果未显示，请参考上方 MCP 配置指南，检查服务器是否已启用并连接。
+
+### 2. 整理有来源的 API 摘要
+
+例如，向 Cursor 提问：
+
+```text
+使用 Parallel 的 web_search 查找 GitHub 官方 REST 文档中列出仓库 Issues 的接口，
+再使用 web_fetch 阅读相关文档。
+整理简短的 API 摘要，附上来源 URL 和核对日期：
+- HTTP 方法与路径、认证要求和版本请求头
+- 路径/查询参数、类型、默认值和文档明确规定的约束
+- 响应结构、文档明确规定的必填/可空字段以及错误状态码
+- 分页方式，以及 Issues 与 Pull Requests 的区别
+来源无法确认的内容标记为未知，不要从示例响应推断字段是否必填。
+不要包含真实令牌或私有数据。
+```
+
+对照[官方接口文档](https://docs.github.com/en/rest/issues/issues#list-repository-issues)审核摘要。确认每条信息属于所选接口和 API 版本，建模前先解决未知项。将来源 URL 和审核日期保存在项目笔记中。
+
+### 3. 将审核后的摘要交给 Loom
+
+在 API 项目中启动 Loom：
+
+```bash
+loom chat --dir ./my-api-project
+```
+
+将审核后的摘要粘贴到聊天中，并提出类似请求：
+
+```text
+为下方摘要中的接口生成 Loom API 文档。使用已经核实的请求/响应细节，
+在适当位置使用可复用实体。对于尚未确认的字段，请先询问我，不要编造。
+
+[在此粘贴审核后的 API 摘要]
+```
+
+对照摘要审核生成的 Schema，再运行 `loom view --dir ./my-api-project` 查看文档，通过 `loom mock --dir ./my-api-project` 使用本地 Mock 响应。Mock 可帮助测试集成所预期的数据结构；真实 API 行为仍需单独向上游服务验证。
+
 ## 📖 使用指南
 
 ### `loom chat`
